@@ -20,9 +20,13 @@ func getGithubClient() HttpClient {
 	return client
 }
 
-func main() {
-	headers := make(http.Header)
-	response, err := githubHttpClient.Get("https://api.github.com", headers)
+type User struct {
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+}
+
+func createUser(user User) {
+	response, err := githubHttpClient.Post("https://api.github.com", nil, user)
 	if err != nil {
 		panic(err)
 	}
