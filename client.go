@@ -2,7 +2,9 @@ package main
 
 import "net/http"
 
-type httpClient struct{}
+type httpClient struct {
+	Headers http.Header
+}
 
 func New() HttpClient {
 	client := &httpClient{}
@@ -10,6 +12,7 @@ func New() HttpClient {
 }
 
 type HttpClient interface {
+	SetHeaders(headers http.Header)
 	Get(url string, headers http.Header) (*http.Response, error)
 	Post(url string, headers http.Header, body interface{}) (*http.Response, error)
 	Put(url string, headers http.Header, body interface{}) (*http.Response, error)
@@ -18,7 +21,7 @@ type HttpClient interface {
 }
 
 func (c *httpClient) Get(url string, headers http.Header) (*http.Response, error) {
-	return c.do(http.MethodGet, url, headers, nil)
+	return c.do(http.MethodGet, url, headers, headers)
 }
 
 func (c *httpClient) Post(url string, headers http.Header, body interface{}) (*http.Response, error) {
@@ -39,4 +42,8 @@ func (c *httpClient) Patch(url string, headers http.Header, body interface{}) (*
 func (c *httpClient) Delete(url string, headers http.Header) (*http.Response, error) {
 	return c.do(http.MethodGet, url, headers, nil)
 
+}
+
+func (c *httpClient) SetHeaders(headers http.Header) {
+	c.Headers = headers
 }
