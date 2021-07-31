@@ -2,7 +2,7 @@ package main
 
 func basicExample() {
 
-	client := New()
+	//client := New()
 
-	client.Get()
+	//client.Get()
 }
