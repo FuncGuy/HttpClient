@@ -1,5 +1,8 @@
 package main
 
-func main() {
+func basicExample() {
 
+	client := New()
+
+	client.Get()
 }
